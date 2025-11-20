@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IT Helpdesk Tickets</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-title">IT Helpdesk Portal</div>
+    <div>
+        <a href="/" class="topbar-link">Raise Ticket</a>
+        <a href="/tickets" class="topbar-link active">Dashboard</a>
+        <a href="/admin/logout" class="topbar-link">Logout ({{ user }})</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>IT Helpdesk Ticket Dashboard</h2>
+
+    <div class="filters">
+        <label>Status:</label>
+        <select id="statusFilter" onchange="filterTickets()">
+            <option>All</option>
+            <option>Open</option>
+            <option>In Progress</option>
+            <option>Resolved</option>
+        </select>
+
+        <label>Priority:</label>
+        <select id="priorityFilter" onchange="filterTickets()">
+            <option>All</option>
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+        </select>
+    </div>
+
+    <table id="ticketTable" class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Dept</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for t in tickets %}
+            <tr data-status="{{ t[5] }}" data-priority="{{ t[4] }}">
+                <td>{{ t[0] }}</td>
+                <td>{{ t[1] }}</td>
+                <td>{{ t[2] }}</td>
+                <td>{{ t[3] }}</td>
+                <td class="{{ t[4]|lower }} badge">{{ t[4] }}</td>
+                <td class="{{ t[5].replace(' ', '').lower() }} badge">{{ t[5] }}</td>
+                <td>{{ t[6] }}</td>
+
+                <td>
+                    <form action="/update_status" method="POST">
+                        <input type="hidden" name="ticket_id" value="{{ t[0] }}">
+                        <select name="status">
+                            <option {% if t[5]=='Open' %}selected{% endif %}>Open</option>
+                            <option {% if t[5]=='In Progress' %}selected{% endif %}>In Progress</option>
+                            <option {% if t[5]=='Resolved' %}selected{% endif %}>Resolved</option>
+                        </select>
+                        <button type="submit" class="btn small">Save</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function filterTickets() {
+    const status = document.getElementById("statusFilter").value;
+    const priority = document.getElementById("priorityFilter").value;
+    const rows = document.querySelectorAll("#ticketTable tbody tr");
+
+    rows.forEach(row => {
+        const rowStatus = row.getAttribute("data-status");
+        const rowPriority = row.getAttribute("data-priority");
+
+        const statusMatch = (status === "All" || rowStatus === status);
+        const priorityMatch = (priority === "All" || rowPriority === priority);
+
+        row.style.display = statusMatch && priorityMatch ? "" : "none";
+    });
+}
+</script>
+
+</body>
+</html>

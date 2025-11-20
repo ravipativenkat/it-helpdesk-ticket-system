@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raise IT Ticket</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-title">IT Helpdesk Portal</div>
+    <div>
+        <a href="/" class="topbar-link active">Raise Ticket</a>
+        <a href="/admin/login" class="topbar-link">Admin Login</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Raise New IT Ticket</h2>
+
+    <div class="card">
+        <form action="/submit" method="POST" class="form">
+
+            <div class="row">
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" name="name" placeholder="Enter your name" required>
+                </div>
+
+                <div class="field">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="field">
+                    <label>Department</label>
+                    <select name="department">
+                        <option>IT</option>
+                        <option>HR</option>
+                        <option>Finance</option>
+                        <option>Operations</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Category</label>
+                    <select name="category">
+                        <option>VPN Issue</option>
+                        <option>Outlook Issue</option>
+                        <option>Windows Login</option>
+                        <option>Network Issue</option>
+                        <option>Application Issue</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="field">
+                    <label>Priority</label>
+                    <select name="priority">
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Description</label>
+                <textarea name="description" rows="4" placeholder="Explain the issue clearly" required></textarea>
+            </div>
+
+            <button type="submit" class="btn">Submit Ticket</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

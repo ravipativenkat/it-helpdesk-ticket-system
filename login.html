@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login - IT Helpdesk</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-title">IT Helpdesk Portal</div>
+    <div>
+        <a href="/" class="topbar-link">Raise Ticket</a>
+        <a href="/admin/login" class="topbar-link active">Admin Login</a>
+    </div>
+</div>
+
+<div class="container small-container">
+    <h2>Admin Login</h2>
+
+    <div class="card narrow">
+        <form method="POST" class="form">
+            <div class="field">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="admin" required>
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+
+            {% if error %}
+            <div class="error-msg">{{ error }}</div>
+            {% endif %}
+
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
